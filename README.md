@@ -75,5 +75,14 @@ nfc-poll
 ```
 
 ## Store NDEF data on Mifare Ultralight cards
-This section briefly outlines the steps required to prepare a blank Mifare Ultralight card for storing NDEF records and shows how to store a URL in a NDEF record.
+This section briefly outlines the steps required to prepare a blank Mifare Ultralight card as a NFC Forum Type 2 Tag for storing NDEF records and shows how to store a URL in a NDEF record. 
+
+### Prepare Mifare Ultralight for NDEF
+Blank Mifare Ultralight cards ship with an empty one time programmable (OTP) area located in block/page 3. The NFC Forum Type 2 Tag Operation Specification puts the Capability Container (CC) used for managing information on the tag at this block. To initialize the card the CC must be written.
+
+> :warning: **You only have one shot** - As the name suggest the OTP can only be written once. Therefore, extrem care should be taken when writting the CC. Otherwise you may end up with a broken card.
+
+Get a dump of the blank Mifare Ultralight card.
+
+
 
