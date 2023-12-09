@@ -74,3 +74,6 @@ Poll NFC tag to check if libnfc is fuctional.
 nfc-poll
 ```
 
+## Store NDEF data on Mifare Ultralight cards
+This section briefly outlines the steps required to prepare a blank Mifare Ultralight card for storing NDEF records and shows how to store a URL in a NDEF record.
+
