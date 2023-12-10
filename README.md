@@ -3,7 +3,7 @@ The first section of this document describes how to use the PN532 RFID NFC modul
 
 
 ## Setting up PN532 on RPI
-This section briefly covers the setup of the PN532 RFID NFC module with Raspberry Pi. The module is connected to the Raspberry Pi via I2C and controlled via libnfc.
+This section briefly covers the setup of the PN532 RFID NFC module with Raspberry Pi. The module is connected to the Raspberry Pi via I2C and controlled via [libnfc](https://github.com/nfc-tools/libnfc).
 
 ### Connect PN532 module
 > :warning: In case the used PN532 module offers multiple interfaces ensure that it is configured (check for jumpers/switches) for I2C.
@@ -14,7 +14,7 @@ Connect the I2C pins to the following physical pins on the Raspberry Pi.
  * SDA -> 3
  * SCL -> 5
 
-*Note on Raspberry Pi numbering:*
+*Note on Raspberry Pi [pin numbering](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio-and-the-40-pin-header):*
 ```
 ---------------------------
 | 2 4 6 8                 | Header
@@ -29,7 +29,7 @@ Connect the I2C pins to the following physical pins on the Raspberry Pi.
 
 ### Setup Raspberry Pi
 #### Enable I2C Interface
-Use the Raspberry Pi configuration tool to enable the I2C interface.
+Use the Raspberry Pi configuration tool called [`raspi-config`](https://www.raspberrypi.com/documentation/computers/configuration.html) to enable the I2C interface.
 ```
 sudo raspi-config nonint do_i2c 0
 ```
@@ -53,7 +53,7 @@ Example output (device found at addr 24)
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- -- --
 ```
-In case the module ist not found use `i2cdetect -l` to list available I2C buses and scan them for devices by swapping out the bus number passed to `i2cdetect`.
+In case the module ist not found use `i2cdetect -l` to list available I2C buses and scan them for devices by changing the bus number passed to `i2cdetect`([see man page](https://www.unix.com/man-page/centos/8/i2cdetect/)).
 
 
 #### Install and configure libnfc
@@ -79,6 +79,24 @@ This section briefly outlines the steps required to prepare a blank Mifare Ultra
 
 ### Prepare Mifare Ultralight for NDEF
 Blank Mifare Ultralight cards ship with an empty one time programmable (OTP) area located in block/page 3. The NFC Forum Type 2 Tag Operation Specification puts the Capability Container (CC) used for managing information on the tag at this block. To initialize the card the CC must be written.
+
+<details>
+  <summary><b>Mifare Ultralight layout</b></summary>
+
+  [SonMicro Elektronik MIFARE ULTRALIGHT User Manual](https://shop.sonmicro.com/Downloads/MIFAREULTRALIGHT-UM.pdf)
+  ![Mifare Ultralight Memory Layout](mfu_memory.png)   
+</details>
+
+
+<details>
+  <summary><b>NFC Forum Type 2 Tag layout</b></summary>
+
+  [NFC Forum Type 2 Tag Operation Specification](https://blog.eletrogate.com/wp-content/uploads/2018/05/NFCForum-TS-Type-2-Tag_1.1.pdf)
+  ![Type2 Tag Memory Layout](type2_tag_memory.png)   
+</details>
+
+
+
 
 > :warning: **You only have one shot** - As the name suggest the OTP can only be written once. Therefore, extrem care should be taken when writting the CC. Otherwise you may end up with a broken card.
 
