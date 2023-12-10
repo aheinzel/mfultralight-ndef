@@ -96,11 +96,23 @@ Blank Mifare Ultralight cards ship with an empty one time programmable (OTP) are
 </details>
 
 
-
-
 > :warning: **You only have one shot** - As the name suggest the OTP can only be written once. Therefore, extrem care should be taken when writting the CC. Otherwise you may end up with a broken card.
 
-Get a dump of the blank Mifare Ultralight card.
+One easy way to manually add the CC is to modify the dump of a blank Mifare Ultralight card. For this the card is first dumped with `nfc-mfultralight`.
+```
+nfc-mfultralight r blank.mfd
+```
+
+Subsequently, the dump editable is converted into a hexdump with `xxd` in order to make it editable with a standard texteditor.
+```
+xxd -c 4 blank.mfd > blank.hex
+```
+
+A dump of an empty card is shown below, the OTP area is located in row XXX.
+```
+
+```
+
 
 
 
